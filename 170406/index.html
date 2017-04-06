@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>DOM Practice</title>
+</head>
+<body>
+  <nav>
+    <ul>
+      <li>Menu#01</li>
+      <li>Menu#02</li>
+      <li>Menu#03</li>
+      <li href="test">Menu#04</li>
+    </ul>
+  </nav>
+  <div id="container">
+    <div class="color" id="red">red</div>
+    <div class="color" id="blue">blue</div>
+    <div class="color" id="green">green</div>
+  </div>
+  
+  <script src="dom.js"></script>
+  
+  <!--실습 #2-->
+  <script>
+    var red = document.getElementById("red");
+    red.style.backgroundColor = "red";
+    var blue = document.getElementById("blue");
+    blue.style.backgroundColor = "blue";
+    var green = document.getElementById("green");
+    green.style.backgroundColor = "green";
+    
+    var liList = document.getElementsByTagName("li");
+    for(var i=0; i < liList.length; i++) {
+      liList[i].style.fontSize = (10 + i*3) + "px";
+    }
+  </script>
+  
+  <!--실습 #2-->
+  <script>
+    var colorList = document.getElementsByClassName("color");
+    for(var i=0; i < colorList.length; i++) {
+      colorList[i].style.border = "1px solid black";
+    }
+    
+    var hrefli = document.getElementsByClassName("li[href]");
+    for(var i=0; i < hrefli.length; i++) {
+      hrefli[i].style.border = "1px solid black";
+    }
+    
+    var container = document.getElementById("container");
+    var divList = document.getElementsByTagName("div");
+    for(var i=0; i < divList.length; i++) {
+      divList[i].style.textAlign = "left";
+    }
+  </script>
+  
+  <!--실습 #3-->
+  <script>
+    var liList = document.getElementsByTagName("li");
+    
+    // li tag를 가진 애들의 innerHTML을 Menu(#{i}), class를 test로
+    for(var i=0; i < liList.length; i++) {
+      liList[i].innerHTML = "Menu (" + (i + 1) + ")";
+      liList[i].setAttribute("class", "test");
+    }
+    
+    // 실습 #4를 위해 주석처리
+    // var container = document.getElementById("container");
+    // container.innerHTML = "<h1>Hello Web Programming</h1>"
+  </script>
+  
+  <!--실습 #4-->
+  <script>
+    // color = 0부터 255까지 5ms마다 foo() 실행 -> 그라데이션
+    // (function() {
+    //   var red = document.getElementById("red");
+    //   var blue = document.getElementById("blue");
+    //   var green = document.getElementById("green");
+    //   var color = 0;
+    //   var id = setInterval(foo, 5);
+    //   function foo() {
+    //     if (color == 255) {
+    //       clearInterval(id);
+    //     }
+    //     else {
+    //       color++;
+    //       red.style.backgroundColor = "rgb(" + color + ", 0, 0)";
+    //       blue.style.backgroundColor = "rgb(0, 0, " + color + ")";
+    //       green.style.backgroundColor = "rgb(0, " + color + ", 0)";
+    //     }
+    //   }
+    // })();
+  </script>
+  
+  <!--실습 #5-->
+  <script>
+    (function () {
+      elem = ["red", "blue", "green"];
+
+      var width = 0;
+      
+      for (var i=0; i < elem.length-1; i++) {
+        var id = setInterval(foo, 20);
+        
+        function foo() {
+          if (width >= 100) {
+            clearInterval(id);
+          }
+          else {
+            width++;
+            document.getElementById(elem[i]).style.width = width + '%';
+            document.getElementById(elem[i]).innerHTML = width + '%';
+          }
+        }
+        width=0;
+      }
+    })();
+  </script>
+</body>
+</html>
