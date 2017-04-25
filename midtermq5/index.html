@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<div class="top">
+		<input type="radio" name="who" id="me" checked="true"/>
+		<label for="me">ME</label>
+		<input type="radio" name="who" id="other"/>
+		<label for="other">OTHER</label>
+		<br/>
+		<input type="text" placeholder="메세지 입력" id="msg"/>
+		<button onclick="sendMsg();">전송</button><br/>
+		<button onclick="clearMsg();">모두 지우기</button>
+	</div>
+
+	<div id="chat"></div>
+
+	<style>
+		.top {
+			border: 1px solid black;
+			display: inline-block;
+			padding: 5px;
+		}
+
+		.msg {
+			border: 1px dotted black;
+			display: inline-block;
+			clear: both;
+			padding: 0 15px;
+		}
+
+		.me {
+			float: right;
+		}
+
+		.other {
+			float: left;
+		}
+
+		#chat {
+			border: 1px solid black;
+			padding: 5px;
+		}
+
+		#chat:after {
+			content: " ";
+			display: block;
+			clear: both;
+		}
+	</style>
+
+	<script type="text/javascript">
+
+		function sendMsg () {
+			var msg = document.getElementById("msg").value;
+			if(msg.length <= 0) alert ("메세지를 입력해주세요");
+
+			else {
+				var doc = document.createElement("div");
+				var h4 = document.createElement("h4");
+				var h4txt;
+
+				if(document.getElementById("me").checked) {
+					h4txt = document.createTextNode("ME");
+					doc.className = "msg me";
+				}
+
+				else {
+					h4txt = document.createTextNode("OTHER");
+					doc.className = "msg other";
+				}
+
+				h4.appendChild(h4txt);
+				doc.appendChild(h4);
+
+				var p = document.createElement("p");
+				var ptxt = document.createTextNode(msg);
+				p.appendChild(ptxt);
+				doc.appendChild(p);
+
+				document.getElementById("chat").appendChild(doc);
+			}
+		}
+
+		function clearMsg () {
+			var msgs = document.getElementsByClassName("msg");
+			while(msgs.length > 0) document.getElementById("chat").removeChild(msgs[0]);
+		}
+
+	</script>
+</body>
+</html>

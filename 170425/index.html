@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Naver</title>
+</head>
+<body onload = "rankScroll();">
+	<div id="ranking" onmouseover="mouseOn();" onmouseleave="mouseOut();">
+		<div id="rlist">
+			<ul>
+				<li>1. AAA</li>
+				<li>2. BBB</li>
+				<li>3. CCC</li>
+				<li>4. DDD</li>
+				<li>5. EEE</li>
+				<li>6. FFF</li>
+				<li>7. GGG</li>
+				<li>8. HHH</li>
+				<li>9. III</li>
+				<li>10. JJJ</li>
+				<li>11. AAA</li>
+			</ul>
+		</div>
+	</div>
+
+	<style>
+		* {
+			padding: 0;
+			margin: 0;
+		}
+
+		#ranking {
+			border: 1px solid green;
+			width: 300px;
+			height: 30px;
+			box-sizing: border-box;
+			overflow: hidden;
+			position: relative;
+			margin: 30px;
+		}
+
+		#rlist {
+			position: absolute;
+			width: 100%;
+		}
+
+		#rlist li {
+			height: 30px;
+			line-height: 30px;
+			padding-left: 5px;
+		}
+	</style>
+
+	<script type="text/javascript">
+		var myTimer1, myTimer2;
+
+		function rankScroll () {
+			myTimer1 = setInterval(scroll, 3000);
+			var top = 0;
+
+			function scroll () {
+				var list = document.getElementById("rlist");
+				myTimer2 = setInterval(animation, 50);
+
+				if (top == -301) top = -1;
+
+				function animation() {
+					if (top % 30 == 0) {
+						clearInterval(myTimer2);
+						top--;
+					}
+					else {
+						list.style.top = top + "px";
+						top--;
+					}
+				}
+			}
+		}
+
+		function mouseOn () {
+			clearInterval(myTimer1);
+			clearInterval(myTimer2);
+
+			var ranking = document.getElementById("ranking");
+
+			ranking.style.height = "300px";
+
+			var list = document.getElementById("rlist");
+			list.style.top = 0;
+		}
+
+		function mouseOut () {
+			var ranking = document.getElementById("ranking");
+			ranking.style.height = "30px";
+			rankScroll();
+		}
+	</script>
+</body>
+</html>
