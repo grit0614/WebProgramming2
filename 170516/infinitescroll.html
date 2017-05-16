@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>jQuery Practice</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+</head>
+<body>
+    <p class="dummy">Value : [[value]]</p>
+    
+    <script>
+        $(document).ready(function(){
+            $(window).on("scroll", function(){
+                var scrollHeight = $(window).scrollTop() + $(window).height();
+                var documentHeight = $(document).height();
+                
+                if(scrollHeight == documentHeight) {
+                    appendP(10);
+                }
+            });
+            
+            appendP(30);
+        });
+        
+        function appendP(num) {
+            for(var i = 0; i < num; i++) {
+                var dummy = $(".dummy").clone();
+                dummy.removeClass("dummy");
+                
+                var random = Math.floor((Math.random() * 10) + 1);
+                dummy.html(dummy.html().replace("[[value]]", random));
+                
+                $("body").append(dummy);
+            }
+        }
+    </script>
+</body>
+</html>

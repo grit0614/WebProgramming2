@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>jQuery Practice#2</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    
+    <style type="text/css">
+        * { padding: 0; margin: 0; }
+        
+        body { padding: 50px; }
+        
+        .fileBtn {
+            display: inline-block;
+            border: 1px solid black;
+            padding: 8px 20px;
+            cursor: pointer;
+        }
+        
+        input[type='file'] { display: none; }
+        
+        div {
+            width: 50%;
+            height: 300px;
+            border: 1px solid black;
+            /*line-height: 300px;*/
+            text-align: center;
+            font-size: 20px;
+            cursor: pointer;
+            word-break: break-all;
+        }        
+    </style>
+</head>
+<body>
+    <a class="fileBtn" onclick="$('#myFile').click();">파일 찾아보기</a>
+    <input type="file" id="myFile"/>
+    <br/>
+    <div id="myDiv1">5</div>
+    <div id="myDiv2"></div>
+    <div id="myDiv3"></div>
+    
+    <a class="fileBtn" id="btn01">A 추가</a>
+    <a class="fileBtn" id="btn02">B 추가</a>
+    <a class="fileBtn" id="btn03">C 추가</a>
+    <a class="fileBtn" id="btn04">A 빼기</a>
+    <a class="fileBtn" id="btn05">B 빼기</a>
+    <a class="fileBtn" id="btn06">C 빼기</a>
+    
+    <div id="myDiv"></div>
+    
+    <script>
+        $("#myDiv1").click(function() {
+            var num = parseInt($("#myDiv1").html());
+            if(num - 1 < 0) { num = 5; }
+            else { num = num - 1 }
+            $("#myDiv1").html(num);
+        });
+        
+        $("#myDiv2").mousemove(function(event) {
+            $("#myDiv2").html("pos : (" + event.offsetX + "," + event.offsetY + ")");
+        });
+        
+        // 첫번째 인자가 hoverin, 두번째 인자가 hoverout
+        $("#myDiv3").hover (
+            function() {
+                $(this).css("background-color", "red");
+            },
+            function() {
+                $(this).css("background-color", "");
+            }
+        );
+        
+        function addA() {
+            $("#myDiv").html($("#myDiv").html() + "A");
+        }
+        function addB() {
+            $("#myDiv").html($("#myDiv").html() + "B");
+        }
+        function addC() {
+            $("#myDiv").html($("#myDiv").html() + "C");
+        }
+        
+        $("#btn01").click(function(){
+            document.getElementById("myDiv").addEventListener("click", addA);
+        });
+        $("#btn02").click(function(){
+            document.getElementById("myDiv").addEventListener("click", addB);
+        });
+        $("#btn03").click(function(){
+            document.getElementById("myDiv").addEventListener("click", addC);
+        });
+        $("#btn04").click(function(){
+            document.getElementById("myDiv").removeEventListener("click", addA);
+        });
+        $("#btn05").click(function(){
+            document.getElementById("myDiv").removeEventListener("click", addB);
+        });
+        $("#btn06").click(function(){
+            document.getElementById("myDiv").removeEventListener("click", addC);
+        });
+    </script>
+</body>
+</html>

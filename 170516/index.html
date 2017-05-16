@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>jQuery Practice#3</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    
+    <style>
+        input[type='text'] { width: 50px; }  
+    </style>
+</head>
+<body>
+    <!--실습 #1-->
+    <div>DIV
+        <p class="first">P#1<span>SPAN<b>B#1</b></span></p>
+        <p class="last"><b class="deco">B#2</b></p>
+    </div>
+    <ul>
+        <li class="first">Item#01</li>
+        <li>Item#02</li>
+        <li class="selected">Item#03</li>
+        <li>Item#04</li>
+        <li class="last">Item#05</li>
+    </ul>
+    
+    <!--실습 #2-->
+    <h1>인증키 16자리를 입력해주세요</h1>
+    <form action="">
+        <input type="text" id="key01" maxlength="4"/><span>-</span>
+        <input type="text" id="key02" maxlength="4"/><span>-</span>
+        <input type="text" id="key03" maxlength="4"/><span>-</span>
+        <input type="text" id="key04" maxlength="4"/>
+    </form>
+    
+    <script>
+        $(document).ready(function() {
+            var divChild = $("div").children().each(function() {
+                $(this).css("background-color", "red");
+            });
+            
+            var divChildFirst = $("div").children(".first").each(function() {
+                $(this).css("background-color", "blue");
+            });
+            
+            $("div").find("span").css("color", "white");
+            
+            $("b.deco").parent().css("text-align", "center");
+            $("b.deco").parents().css("opacity", "0.8");
+            
+            $("li.selected").siblings().css("text-decoration", "underline");
+            $("li.selected").prev().text(" - prev - ");
+            $("li.selected").prevAll().css("background-color", "green");
+            $("li.selected").prevUntil(".first").css("color", "yellow");
+            
+            $("li.selected").next().text(" - next - ");
+            $("li.selected").nextAll().css("background-color", "pink");
+            $("li.selected").nextUntil(".last").css("color", "white");
+            
+            
+            // 실습 #2
+            $("#key01").focus();
+            
+            $("input[type='text']").on("keyup", function(event) {
+                if($(this).val().length == 4) {
+                    var tmp = $(this).nextAll("input[type='text']").first();
+                    if(tmp.length != 0) {
+                        $(this).nextAll("input[type='text']").first().focus();
+                    }
+                    else {
+                        alert("인증번호 확인");
+                    }
+                }
+                
+                if(event.keyCode == 8 && $(this).val().length == 0) {
+                    var tmp = $(this).prevAll("input[type='text']").first().val();
+                    if (typeof tmp !== "undefined") {
+                        $(this).prevAll("input[type='text']").first().val(tmp.substring(0, 3));
+                        $(this).prevAll("input[type='text']").first().focus();
+                    }   
+                }
+            });
+        });
+    </script>
+</body>
+</html>
