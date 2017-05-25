@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Wheel Slider</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+        
+        .myVSlider {
+            position: relative;
+            overflow: hidden;
+            border: 1px solid black;
+            box-sizing: border-box;
+        }
+        
+        .window {
+            width: 100%;
+            position: absolute;
+        }
+        
+        .vItem {
+            width: 100%;
+            height: 100%;
+            background-image: cover;
+        }
+    </style>
+</head>
+<body>
+    <div class="myVSlider">
+        <div class="window">
+            <div class="vItem" style="background-image:url('https://static.pexels.com/photos/2324/skyline-buildings-new-york-skyscrapers.jpg')"></div>
+            <div class="vItem" style="background-image:url('https://static.pexels.com/photos/33109/fall-autumn-red-season.jpg')"></div>
+            <div class="vItem" style="background-image:url('https://static.pexels.com/photos/147503/pexels-photo-147503.jpeg')"></div>
+            <div class="vItem" style="background-image:url('https://static.pexels.com/photos/50594/sea-bay-waterfront-beach-50594.jpeg')"></div>
+        </div>
+    </div>
+    
+    <script>
+        $(document).ready(function() {
+            initMySlider();
+        });
+        
+        function initMySlider() {
+            var width = "100%";
+            var height = $(window).height();
+            
+            var vSlider = $(".myVSlider");
+            
+            for(var i=0; i<vSlider.length; i++) {
+                $(vSlider[i]).css("width", width + "px");
+                $(vSlider[i]).css("height", height + "px");
+                
+                var items = $(vSlider[i]).find(".vItem");
+                items.css({"width": width, "height": height + "px"})
+                vSlider[i].pageLen = items.length;
+                vSlider[i].currentPage = items.length > 0 ? 1 : 0;
+                vSlider[i].isAnimate = false;
+                
+                $(vSlider[i]).on("mousewheel", function(event) {
+                    if(event.originalEvent.wheelDelta > 0) {
+                        if(!this.isAnimate && this.currentpage < this.pageLen) {
+                            this.isAnimate = true;
+                            this.currentpage++;
+                            $(this).find(".window").animate(
+                                {"top" : (((this.currentPage - 1) * height) * -1) + "px"}, 800, function () {
+                                    $(this).parent()[0].isAnimate = false;
+                            }); 
+                        }
+                    }
+                    
+                    else {
+                        if(!this.isAnimate && this.currentPage > 1) {
+                            this.isAnimate = true;
+                            this.currentPage--;
+                            $(this).find(".window").animate(
+                                {"top" : (((this.currentPage - 1) * height) * -1) + "px"}, 800, function () {
+                                    $(this).parent()[0].isAnimate = false;
+                            }); 
+                        }
+                    }
+                });
+            }
+        }
+    </script>
+</body>
+</html>

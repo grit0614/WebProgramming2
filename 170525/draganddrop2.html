@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>drag and drop2</title>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" type="text/css" />
+    <style>
+        #images > div, #boards > div {
+            float: left;
+            width: 100px;
+            border: 1px solid #000000; 
+            margin: 5px;
+        }
+        
+        #images div img {width: 100px; height: 100px;}
+        #boards {clear: both;}
+        #boards > div {font-size: 2em; line-height: 100px; text-align: center;}
+    </style>
+</head>
+<body>
+    <div id="images">
+        <div>
+            <img src="http://lorempixel.com/100/100/food" id="food">
+            <img src="http://lorempixel.com/100/100/city" id="city">
+            <img src="http://lorempixel.com/100/100/sports" id="sports">
+            <img src="http://lorempixel.com/100/100/animals" id="animals">
+        </div>
+    </div>
+    
+    <div id="boards">
+        <div title="sports">sports</div>
+        <div title="food">food</div>
+        <div title="animals">animals</div>
+        <div title="city">city</div>
+    </div>
+    
+    <script>
+        $(function() {
+            $("#images div img").draggable({
+                start: function(event, ui) {
+                    $(this).draggable("option", "revert", true);
+                    $("#images div img").css("zIndex", 10);
+                    $(this).css("zIndex", 100);
+                }
+            });
+            
+            $("#boards div").droppable({
+                drop: function(event, ui) {
+                    var droptitle = $(this).attr("title");
+                    var drophtml = $(this).html;
+                    var dragid = ui.draggable.attr("id");
+                    if (dragid == droptitle) {
+                        ui.draggable.draggable("option", "revert", false);
+                        var droppableOffset = $(this).offset();
+                        var x = droppableOffset.left + 1;
+                        var y = droppableOffset.top + 1;
+                    }
+                }
+            });
+            
+            $(document).ready(function(){
+                $("#images div").sort(function(){
+                   return Math.random() * 10 > 5 ? 1 : -1; 
+                }).each(function(){
+                    $(this).appendTo($(this).parent());
+                });
+                
+                $("#boards div").sort(function(){
+                   return Math.random() * 10 > 5 ? 1 : -1; 
+                }).each(function(){
+                    $(this).appendTo($(this).parent());
+                });
+            });
+        });
+    </script>
+</body>
+</html>

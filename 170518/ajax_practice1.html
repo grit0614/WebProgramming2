@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AJAX Practice 1</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+    <script>
+        $(document).ready(function() {
+            
+            // 실습#1 - GET request로 ajax 읽어오기
+            $.ajax ({
+                url: "https://webprogramming-55c29.firebaseio.com/Luffy.json",
+                method: "GET",
+                success : function(data) {
+                    $("body").html(printObj(data));
+                }
+            });
+            
+            // 실습#2 - PUT request로 ajax field추가
+            // PUT : 있으면 변경사항 대체하고 없으면 추가
+            
+            // var param = {
+            //     "gender" : "male"
+            // }
+            
+            // $.ajax ({
+            //     // 주소 주의 (상위경로에 넣으면 덮어써버림)
+            //     url: "https://webprogramming-55c29.firebaseio.com/Luffy/friends/Usopp.json",
+            //     method: "PUT",
+            //     data: JSON.stringify(param),
+            //     success: function(data) {
+            //         $("body").html(printObj(data));
+            //     }
+            // });
+            
+            
+            // 실습#3 - POST request로 ajax field추가
+            // POST : 임의의 키값 부여해서 데이터 추가
+            // 중복은 방지할 수 있으나, 예쁘게 ajax tree 쌓지 못할듯?
+            
+            // var param = {
+            //     "Chopper" : {
+            //         "gender" : "male"
+            //     }
+            // }
+            
+            // $.ajax ({
+            //     url: "https://webprogramming-55c29.firebaseio.com/Luffy/friends.json",
+            //     method: "POST",
+            //     data: JSON.stringify(param),
+            //     success: function(data) {
+            //         $("body").html(printObj(data));
+            //     }
+            // });
+            
+            
+            
+            // 실습#4 - DELETE request로 data 삭제
+            // $.ajax ({
+            //     url: "https://webprogramming-55c29.firebaseio.com/Luffy/friends/Zoro.json",
+            //     method: "DELETE",
+            //     success: function(data) {
+            //         $("body").html(printObj(data));
+            //     }
+            // });
+            
+        });
+        
+        function printObj(obj) {
+            var ret = "";
+            if($.type(obj) == "string") {
+                ret = obj;
+            }
+            else {
+                for (var property in obj) {
+                    ret += "{" + property + " : ";
+                    ret += printObj(obj[property]) + "}";
+                }
+            }
+            
+            return ret;
+        }
+    </script>
+</body>
+</html>
