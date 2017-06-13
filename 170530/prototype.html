@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PROTOTYPE</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+    <script>
+        function A() {
+            this.value = 0;
+            this.setValue = function(val) {
+                this.value = val;
+            }
+            this.getValue = function() {
+                return this.value;
+            }
+        }
+        
+        A.prototype.vxv = function() {
+            return this.value * this.value;
+        }
+        
+        var objectA1 = new A();
+        objectA1.setValue(10);
+        var objectA2 = new A();
+        objectA2.setValue(20);
+        
+        console.log("A1.value : " + objectA1.getValue());
+        console.log("A2.value : " + objectA2.getValue());
+        
+        console.log("A1.vxv : " + objectA1.vxv());
+        console.log("A2.vxv : " + objectA2.vxv());
+        
+        
+        A.prototype.comment = "Hello!!!";
+        console.log("A1.comment : " + objectA1.comment);
+        console.log("A2.comment : " + objectA2.comment);
+        
+        A.prototype.comment = "Hi!!!";
+        console.log("A1.comment : " + objectA1.comment);
+        console.log("A2.comment : " + objectA2.comment);
+        
+        objectA2.comment = "I'm A2!!!";
+        console.log("A1.comment : " + objectA1.comment);
+        console.log("A2.comment : " + objectA2.comment);
+        
+        objectA2.__proto__.comment = "I'm child of A!!!";
+        console.log("A1.comment : " + objectA1.comment);
+        console.log("A2.comment : " + objectA2.comment);
+
+        // objectA2의 prototype이 존재하지 않으니 작동안함        
+        // objectA2.prototype.comment = "Mod Prototype by A2!!!";
+        // console.log("A1.comment : " + objectA1.comment);
+        // console.log("A2.comment : " + objectA2.comment);
+        
+        // jQuery prototype
+        var objectJQuery = $("<div></div>");
+        objectJQuery.addClass("myDiv");
+        console.log(objectJQuery);
+        
+        $.fn.extend({
+            comment: "my jQuery obj",
+            getComment: function() {
+                return this.comment;
+            },
+            setComment : function(msg) {
+                this.comment = msg;
+            }
+        });
+        
+        console.log("comment : " + objectJQuery.getComment());
+        objectJQuery.setComment("mod my jQuery obj");
+        console.log("comment : " + objectJQuery.getComment());
+        
+        console.log("body : " + $("body").getComment());
+    </script>
+</body>
+</html>
